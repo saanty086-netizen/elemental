@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Panel · Elemental</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f2;--fg:#1E1E1E;--mut:#5a5d58;--card:#fff;--line:#d8dbd4;--lime:#4DA635;--red:#c0392b;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#161616;--fg:#f2f2f2;--mut:#aeb1ab;--card:#222;--line:#3a3a3a;color-scheme:dark}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font:400 15px/1.5 Montserrat,system-ui,sans-serif}
+h1,h2,h3{font-family:Oswald,Impact,sans-serif;text-transform:uppercase;letter-spacing:.02em;margin:0;font-weight:600}
+h2{font-size:28px;margin-bottom:4px}h3{font-size:19px}
+[hidden]{display:none!important}
+button{font-family:inherit;cursor:pointer}
+.b{border:1.5px solid var(--lime);background:transparent;color:var(--fg);border-radius:999px;padding:8px 16px;font-weight:600;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase}
+.b:hover{background:var(--lime);color:#fff}.b.p{background:var(--lime);color:#fff}.b.s{border-color:var(--line)}.b.s:hover{background:var(--card);border-color:var(--lime);color:var(--fg)}
+.b.dg{border-color:var(--red);color:var(--red)}.b.dg:hover{background:var(--red);color:#fff}.b[disabled]{opacity:.5;pointer-events:none}
+/* login */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.lc{width:100%;max-width:380px;background:var(--card);border-radius:16px;padding:28px;border-top:5px solid var(--lime)}
+.lc p{color:var(--mut);margin:6px 0 18px;font-size:14px}
+.err{color:var(--red);font-size:13px;margin-top:10px;min-height:18px}
+/* top */
+#top{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:10px 16px}
+#top .t{font:600 18px Oswald,sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-right:auto}
+#top .t em{font-style:normal;color:var(--lime)}
+#st{font-size:12.5px;color:var(--mut)}#st.d{color:#d98200;font-weight:600}
+#tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:57px;z-index:19;scrollbar-width:none}
+#tabs button{flex:none;border:0;background:transparent;color:var(--fg);padding:8px 14px;border-radius:999px;font:600 12.5px Montserrat,sans-serif;letter-spacing:.05em;text-transform:uppercase;opacity:.75}
+#tabs button.on{background:var(--lime);color:#fff;opacity:1}
+#main{max-width:860px;margin:0 auto;padding:22px 16px 120px}
+.sub{color:var(--mut);margin:0 0 18px;font-size:14px}
+.box{background:var(--card);border-radius:14px;padding:18px;margin-bottom:16px;border-left:4px solid var(--lime)}
+.box>h3{margin-bottom:10px}
+.f{display:block;margin:0 0 12px}.f>span{display:block;font:600 11px Montserrat,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:5px}
+input[type=text],input:not([type]),textarea,select,input[type=password],input[type=email]{width:100%;padding:10px 12px;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);border-radius:10px;font:400 15px Montserrat,sans-serif}
+textarea{resize:vertical}input:focus,textarea:focus,select:focus{outline:2px solid var(--lime);outline-offset:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:600px){.row2{grid-template-columns:1fr}}
+.item{border:1.5px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px;background:var(--bg)}
+.ih{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.ih b{font:600 14px Oswald,sans-serif;color:var(--lime);letter-spacing:.08em}
+.mv{display:flex;gap:6px}.mv button{width:34px;height:30px;border:1.5px solid var(--line);background:var(--card);color:var(--fg);border-radius:8px;font-size:14px}
+.mv button:hover{border-color:var(--lime)}.mv button.dg{color:var(--red)}
+.sp{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;margin-bottom:8px}.sp button{width:38px;border:0;border-radius:10px;background:var(--bg);color:var(--fg);font-size:18px}
+.imgf{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.imgf img,.noimg{width:120px;height:80px;object-fit:cover;border-radius:10px;background:var(--bg);border:1.5px dashed var(--line)}
+.noimg{display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--mut)}.imgf .bt{display:flex;gap:8px;flex-wrap:wrap}
+.eg{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+.ei{position:relative}.ei img{width:100%;height:80px;object-fit:cover;border-radius:8px;display:block}
+.ei button{position:absolute;top:4px;width:24px;height:24px;border:0;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;font-size:13px;padding:0}
+.ei button[data-act=star]{left:4px}.ei button[data-act=rmimg]{right:4px}
+.ei.first::after{content:"Principal";position:absolute;left:4px;bottom:4px;background:var(--lime);color:#fff;font:600 9px Montserrat;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:6px}
+.addimg{height:80px;border:2px dashed var(--line);background:transparent;color:var(--mut);border-radius:8px;font:600 12px Montserrat}
+.addimg:hover{border-color:var(--lime);color:var(--fg)}
+.sec{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:var(--bg)}
+.sec .nm{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.sec .nm input[type=text]{max-width:210px}
+.sec label.v{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--mut);cursor:pointer}
+.tag{font:600 10px Montserrat;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);border:1px solid var(--lime);border-radius:999px;padding:2px 8px}
+.acts{display:flex;gap:6px;flex-wrap:wrap}
+.note{background:rgba(77,166,53,.12);border-radius:12px;padding:12px 14px;font-size:13.5px;margin-bottom:16px}
+.note.w{background:rgba(217,130,0,.14)}
+.pj{display:flex;gap:12px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:10px;margin-bottom:8px;background:var(--bg)}
+.pj img,.pj .noimg{width:84px;height:58px;flex:none}.pj .i{flex:1;min-width:0}.pj .i b{display:block;font:600 17px Oswald;text-transform:uppercase;letter-spacing:.03em}.pj .i small{color:var(--mut)}
+/* picker */
+#picker{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.6);overflow-y:auto;padding:20px 12px}
+.pk{max-width:760px;margin:0 auto;background:var(--card);border-radius:16px;padding:20px}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin:12px 0}
+.li{position:relative;border:2px solid transparent;border-radius:10px;overflow:hidden;background:var(--bg);padding:0;text-align:left}
+.li:hover{border-color:var(--lime)}.li img{width:100%;height:84px;object-fit:cover;display:block}.li span{display:block;font-size:10.5px;color:var(--mut);padding:4px 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.li .x{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;background:rgba(192,57,43,.9);color:#fff;border:0;font-size:13px;padding:0}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#1E1E1E;color:#fff;border:1.5px solid var(--lime);border-radius:999px;padding:10px 22px;font:600 13px Montserrat,sans-serif;z-index:90;max-width:92vw;text-align:center}
+code{background:var(--bg);padding:1px 6px;border-radius:6px;font-size:13px}
+</style></head><body>
+
+<div id="login" hidden>
+  <div class="lc"><h2>Panel <span style="color:var(--lime)">Elemental</span></h2><p>Ingresá con tu correo y contraseña.</p>
+    <label class="f"><span>Correo</span><input id="em" type="email" autocomplete="username"></label>
+    <label class="f"><span>Contraseña</span><input id="pw" type="password" autocomplete="current-password"></label>
+    <button class="b p" id="go" style="width:100%">Entrar</button><div class="err" id="lerr"></div></div>
+</div>
+
+<div id="cfgerr" hidden style="max-width:560px;margin:60px auto;padding:20px"><div class="note w"><b>Falta completar <code>firebase-config.js</code>.</b><br>Abrí ese archivo, pegá los datos de tu proyecto de Firebase (reemplazá todos los <code>TU_…</code>) y volvé a subirlo.</div></div>
+
+<div id="app" hidden>
+  <div id="top"><div class="t">Elemental <em>· Panel</em></div><span id="st"></span>
+    <a class="b s" href="../index.html" target="_blank" rel="noopener" style="text-decoration:none">Ver catálogo</a>
+    <button class="b p" id="save">Guardar cambios</button><button class="b s" id="out">Salir</button></div>
+  <div id="tabs"></div>
+  <div id="main"></div>
+</div>
+
+<div id="picker" hidden><div class="pk" id="pk"></div></div>
+<div id="toast" hidden></div>
+<input type="file" id="file" accept="image/*" multiple hidden>
+
+<script src="../datos-base.js"></script>
+<script type="module">
+import { firebaseConfig, configurado, imagenes } from '../firebase-config.js';
+const CAT = window.CAT, SDK = 'https://www.gstatic.com/firebasejs/10.14.1/';
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const get = (o, p) => p.split('.').reduce((a, k) => a == null ? a : a[k], o);
+const set = (o, p, v) => { const ks = p.split('.'), l = ks.pop(); ks.reduce((a, k) => a[k], o)[l] = v; };
+const imgSrc = v => !v ? '' : /^(https?:|data:|\/)/.test(v) ? v : '../' + v;
+const uid = p => p + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+const lines = v => v.split('\n').map(x => x.trim()).filter(Boolean);
+let tt; const toast = (m, ms = 3500) => { const t = $('toast'); t.textContent = m; t.hidden = !m; clearTimeout(tt); if (m && ms) tt = setTimeout(() => t.hidden = true, ms); };
+
+let A, F, ST, auth, db, storage, S, remote = null, dirty = false, tab = 'secciones', editX = null, editP = null;
+const TABS = [['secciones', 'Secciones'], ['casas', 'Casas'], ['quinchos', 'Quinchos'], ['contenido', 'Contenido'], ['textos', 'Textos'], ['sitio', 'Datos del sitio'], ['imagenes', 'Imágenes']];
+
+/* ---------- arranque ---------- */
+if (!configurado) { $('cfgerr').hidden = false; }
+else init();
+
+async function init() {
+  A = await import(SDK + 'firebase-app.js'); const AU = await import(SDK + 'firebase-auth.js');
+  F = await import(SDK + 'firebase-firestore.js');
+  const app = A.initializeApp(firebaseConfig); auth = AU.getAuth(app); db = F.getFirestore(app);
+  if (imagenes.USAR_STORAGE) { ST = await import(SDK + 'firebase-storage.js'); storage = ST.getStorage(app); }
+  AU.onAuthStateChanged(auth, async u => {
+    if (u) { $('login').hidden = true; await cargarDatos(); $('app').hidden = false; render(); }
+    else { $('app').hidden = true; $('login').hidden = false; }
+  });
+  const entrar = async () => {
+    $('lerr').textContent = ''; $('go').disabled = true;
+    try { await AU.signInWithEmailAndPassword(auth, $('em').value.trim(), $('pw').value); }
+    catch (e) { $('lerr').textContent = /invalid|wrong|user-not-found|credential/.test(e.code || '') ? 'Correo o contraseña incorrectos.' : 'No se pudo entrar (' + (e.code || e.message) + ').'; }
+    $('go').disabled = false;
+  };
+  $('go').onclick = entrar; $('pw').onkeydown = e => { if (e.key === 'Enter') entrar(); };
+  $('out').onclick = () => { if (dirty && !confirm('Tenés cambios sin guardar. ¿Salir igual?')) return; dirty = false; AU.signOut(auth); };
+}
+
+async function cargarDatos() {
+  try {
+    const snap = await F.getDoc(F.doc(db, 'catalogo', 'sitio'));
+    remote = snap.exists() ? snap.data() : null;
+  } catch (e) { toast('No se pudo leer el catálogo: ' + (e.code || e.message), 7000); remote = null; }
+  S = CAT.normalize(remote); dirty = false; setSt();
+}
+function setSt() { const s = $('st'); s.className = dirty ? 'd' : ''; s.textContent = dirty ? '● Cambios sin guardar' : (remote ? 'Todo guardado' : 'Todavía sin publicar'); }
+const mark = () => { if (!dirty) { dirty = true; setSt(); } };
+window.addEventListener('beforeunload', e => { if (dirty) { e.preventDefault(); e.returnValue = ''; } });
+
+/* ---------- guardar ---------- */
+$('save').onclick = async () => {
+  const data = JSON.parse(JSON.stringify(S)); data.actualizado = new Date().toISOString();
+  if (new Blob([JSON.stringify(data)]).size > 900000) { toast('El contenido es demasiado grande para guardarse.', 6000); return; }
+  $('save').disabled = true; toast('Guardando…', 0);
+  try {
+    if (remote) await F.setDoc(F.doc(db, 'catalogo', 'respaldo'), remote);
+    await F.setDoc(F.doc(db, 'catalogo', 'sitio'), data);
+    remote = data; dirty = false; setSt(); toast('Guardado ✓ — ya está online');
+  } catch (e) {
+    toast(e.code === 'permission-denied' ? 'Sin permiso: revisá que tu correo esté en las reglas de Firestore.' : 'No se pudo guardar: ' + (e.code || e.message), 8000);
+  }
+  $('save').disabled = false;
+};
+
+/* ---------- piezas de formulario ---------- */
+const inp = (p, l, ph = '') => `<label class="f"><span>${l}</span><input type="text" data-p="${p}" value="${esc(get(S, p))}" placeholder="${esc(ph)}"></label>`;
+const area = (p, l, rows = 4, ln = false) => `<label class="f"><span>${l}</span><textarea rows="${rows}" data-p="${p}"${ln ? ' data-lines="1"' : ''}>${esc(ln ? (get(S, p) || []).join('\n') : get(S, p))}</textarea></label>`;
+const imgField = (p, l) => { const v = get(S, p) || ''; return `<div class="f"><span>${l}</span><div class="imgf">${v ? `<img src="${esc(imgSrc(v))}" alt="">` : '<div class="noimg">Sin imagen</div>'}<div class="bt"><button type="button" class="b" data-act="pick" data-p="${p}">${v ? 'Cambiar' : 'Elegir imagen'}</button>${v ? `<button type="button" class="b s" data-act="clear" data-p="${p}">Quitar</button>` : ''}</div></div></div>`; };
+const photos = p => { const a = get(S, p) || []; return `<div class="f"><span>Fotos (la primera es la principal)</span><div class="eg">${a.map((v, j) => `<div class="ei${j ? '' : ' first'}"><img src="${esc(imgSrc(v))}" alt=""><button type="button" data-act="star" data-p="${p}" data-i="${j}" title="Hacer principal">★</button><button type="button" data-act="rmimg" data-p="${p}" data-i="${j}" title="Quitar">×</button></div>`).join('')}<button type="button" class="addimg" data-act="pickmulti" data-p="${p}">+ Agregar fotos</button></div></div>`; };
+const mv = (p, i) => `<span class="mv"><button type="button" data-act="up" data-p="${p}" data-i="${i}" title="Subir">↑</button><button type="button" data-act="dn" data-p="${p}" data-i="${i}" title="Bajar">↓</button><button type="button" class="dg" data-act="del" data-p="${p}" data-i="${i}" title="Eliminar">×</button></span>`;
+const listEd = (p, defs, tpl, add) => ((get(S, p) || []).map((it, i) => `<div class="item"><div class="ih"><b>${String(i + 1).padStart(2, '0')}</b>${mv(p, i)}</div>${defs.map(d => d.img ? imgField(`${p}.${i}.${d.k}`, d.l) : inp(`${p}.${i}.${d.k}`, d.l)).join('')}</div>`).join('') + `<button type="button" class="b s" data-act="add" data-p="${p}" data-tpl="${esc(JSON.stringify(tpl))}">+ ${add}</button>`);
+const specs = p => { const a = get(S, p) || []; return `<div class="f"><span>Datos (valor y etiqueta)</span>${a.map((s, j) => `<div class="sp"><input type="text" data-p="${p}.${j}.v" value="${esc(s.v)}" placeholder="48"><input type="text" data-p="${p}.${j}.l" value="${esc(s.l)}" placeholder="m² cubiertos"><button type="button" data-act="del" data-p="${p}" data-i="${j}">×</button></div>`).join('')}<button type="button" class="b s" data-act="add" data-p="${p}" data-tpl='{"v":"","l":""}'>+ Dato</button></div>`; };
+
+/* ---------- pestañas ---------- */
+const labelOf = k => { const x = S.extra.find(e => e.id === k); return x ? (x.nav || x.h || 'Sección nueva') : (S.navl[k] || k); };
+
+function vSecciones() {
+  const nm = { sistema: 'Construcción en seco', casas: 'Casas', quinchos: 'Quinchos', agregados: 'Ampliaciones', proceso: 'Proceso', pago: 'Formas de pago' };
+  let h = `<h2>Secciones</h2><p class="sub">Ordená, ocultá y renombrá lo que aparece en el catálogo. Podés sumar secciones nuevas.</p>`;
+  h += `<div class="box"><div class="sec"><span class="tag">Fija</span><div class="nm"><b>Portada</b><input type="text" data-p="navl.inicio" value="${esc(S.navl.inicio)}" title="Nombre en la barra"></div><span></span></div>`;
+  S.order.forEach((k, i) => {
+    const x = S.extra.find(e => e.id === k), vis = !S.hide[k];
+    h += `<div class="sec">${mv('order', i).replace(/<button[^>]*data-act="del"[^>]*>.*?<\/button>/, '')}<div class="nm"><b>${x ? esc(x.h || 'Sección nueva') : nm[k]}</b>${x ? '<span class="tag">Nueva</span>' : ''}<input type="text" data-p="${x ? 'extra.' + S.extra.indexOf(x) + '.nav' : 'navl.' + k}" value="${esc(x ? x.nav : S.navl[k])}" title="Nombre en la barra" placeholder="Nombre en la barra"><label class="v"><input type="checkbox" data-hide="${k}" ${vis ? 'checked' : ''}> Visible</label></div><div class="acts">${x ? `<button type="button" class="b s" data-act="editx" data-id="${k}">Editar</button><button type="button" class="b dg" data-act="delx" data-id="${k}">Eliminar</button>` : ''}</div></div>`;
+  });
+  h += `<div class="sec"><span class="tag">Fija</span><div class="nm"><b>Contacto</b><input type="text" data-p="navl.contacto" value="${esc(S.navl.contacto)}" title="Nombre en la barra"></div><span></span></div></div>`;
+  h += `<div class="box"><h3>Agregar una sección nueva</h3><p class="sub">Elegí el formato; después completás el contenido.</p><div class="acts">` +
+    [['tarjetas', 'Tarjetas'], ['texto', 'Texto + imagen'], ['galeria', 'Galería de fotos'], ['lista', 'Lista con tildes']].map(a => `<button type="button" class="b" data-act="addx" data-tipo="${a[0]}">+ ${a[1]}</button>`).join('') + `</div></div>`;
+  if (editX) { const i = S.extra.findIndex(e => e.id === editX); if (i > -1) h += vExtra(i); }
+  return h;
+}
+function vExtra(i) {
+  const x = S.extra[i], p = 'extra.' + i;
+  let h = `<div class="box" id="xed"><h3>Editando: ${esc(x.h || 'sección nueva')}</h3>
+  <div class="row2">${inp(p + '.k', 'Etiqueta pequeña (arriba del título)', 'Ej: Nuestros trabajos')}${inp(p + '.h', 'Título', 'Ej: Obras terminadas')}</div>
+  <div class="row2">${inp(p + '.e', 'Parte del título en verde (opcional)', 'Ej: en Mendoza')}${inp(p + '.nav', 'Nombre en la barra y en el menú', 'Ej: Obras')}</div>
+  ${area(p + '.l', 'Texto de introducción (opcional)', 3)}
+  <label class="f"><span>Formato</span><select data-p="${p}.tipo" data-rr="1">${[['tarjetas', 'Tarjetas'], ['texto', 'Texto + imagen'], ['galeria', 'Galería de fotos'], ['lista', 'Lista con tildes']].map(a => `<option value="${a[0]}"${x.tipo === a[0] ? ' selected' : ''}>${a[1]}</option>`).join('')}</select></label>`;
+  if (x.tipo === 'tarjetas') h += `<span class="f"><span>Tarjetas</span></span>` + listEd(p + '.items', [{ k: 't', l: 'Título' }, { k: 'd', l: 'Descripción' }, { k: 'img', l: 'Imagen (opcional)', img: 1 }], { t: '', d: '', img: '' }, 'Tarjeta');
+  if (x.tipo === 'galeria') h += `<span class="f"><span>Fotos</span></span>` + listEd(p + '.items', [{ k: 'img', l: 'Imagen', img: 1 }, { k: 't', l: 'Pie de foto (opcional)' }], { t: '', img: '' }, 'Foto');
+  if (x.tipo === 'texto') h += area(p + '.body', 'Texto (un párrafo por línea)', 7) + imgField(p + '.img', 'Imagen al costado (opcional)');
+  if (x.tipo === 'lista') h += area(p + '.lst', 'Elementos de la lista (uno por línea)', 6, true) + imgField(p + '.img', 'Imagen al costado (opcional)');
+  h += `${inp(p + '.n', 'Nota al pie (opcional)')}<div class="row2">${inp(p + '.bt', 'Texto de un botón (opcional)', 'Ej: Ver más')}${inp(p + '.bu', 'Link del botón', 'https://...')}</div>
+  <div class="acts"><button type="button" class="b s" data-act="closex">Cerrar editor</button></div></div>`;
+  return h;
+}
+
+function vProyectos(k) {
+  const a = S[k], one = k === 'casas' ? 'casa' : 'quincho';
+  if (editP && editP.k === k) { const i = a.findIndex(x => x.id === editP.id); if (i > -1) return vProyecto(k, i); editP = null; }
+  let h = `<h2>${k === 'casas' ? 'Casas' : 'Quinchos'}</h2><p class="sub">Tocá un proyecto para editar sus datos y fotos.</p>`;
+  h += a.map((p, i) => `<div class="pj">${p.im[0] ? `<img src="${esc(imgSrc(p.im[0]))}" alt="">` : '<div class="noimg">Sin foto</div>'}<div class="i"><b>${esc(p.n)}</b><small>${esc(p.tag || '')} · ${p.im.length} foto${p.im.length === 1 ? '' : 's'}</small></div>${mv(k, i)}<button type="button" class="b" data-act="editp" data-k="${k}" data-id="${p.id}">Editar</button></div>`).join('');
+  h += `<div class="acts" style="margin-top:12px"><button type="button" class="b p" data-act="addp" data-k="${k}">+ Nuevo ${one}</button></div>`;
+  return h;
+}
+function vProyecto(k, i) {
+  const p = `${k}.${i}`, x = S[k][i];
+  let h = `<button type="button" class="b s" data-act="backp" style="margin-bottom:14px">← Volver a la lista</button><h2>${esc(x.n || 'Proyecto')}</h2>
+  <div class="box"><div class="row2">${inp(p + '.n', 'Nombre')}${inp(p + '.tag', 'Etiqueta (ej: Compacta)')}</div>${inp(p + '.desde', 'Precio desde (referencial)', 'A confirmar')}${specs(p + '.sp')}</div>
+  <div class="box">${k === 'casas' ? area(p + '.semi', 'Semiterminada incluye (uno por línea)', 6, true) + area(p + '.full', 'Llave en mano suma (uno por línea)', 6, true) : area(p + '.inc', 'Qué incluye (uno por línea)', 6, true)}</div>
+  <div class="box">${photos(p + '.im')}</div>
+  <div class="acts"><button type="button" class="b s" data-act="dupp" data-k="${k}" data-i="${i}">Duplicar</button><button type="button" class="b dg" data-act="delp" data-k="${k}" data-i="${i}">Eliminar proyecto</button></div>`;
+  return h;
+}
+
+function vContenido() {
+  const T = { t: '', d: '' };
+  return `<h2>Contenido</h2><p class="sub">Los bloques de texto de cada sección. Cada elemento se puede mover, borrar o sumar.</p>
+  <div class="box"><h3>Construcción en seco · tarjetas</h3>${listEd('secs.sistema', [{ k: 't', l: 'Título' }, { k: 'd', l: 'Descripción' }], T, 'Tarjeta')}</div>
+  <div class="box"><h3>Comparativa · semiterminada incluye</h3>${area('cmp.semi', 'Uno por línea', 6, true)}<h3 style="margin-top:8px">Comparativa · llave en mano suma</h3>${area('cmp.full', 'Uno por línea', 6, true)}</div>
+  <div class="box"><h3>Ampliaciones</h3>${listEd('agr', [{ k: 't', l: 'Nombre' }, { k: 'd', l: 'Descripción' }, { k: 'img', l: 'Imagen (opcional)', img: 1 }], { t: '', d: '', img: '' }, 'Ampliación')}</div>
+  <div class="box"><h3>Proceso · pasos</h3>${listEd('secs.proceso', [{ k: 't', l: 'Título' }, { k: 'd', l: 'Descripción' }], T, 'Paso')}</div>
+  <div class="box"><h3>Formas de pago</h3>${listEd('secs.pago', [{ k: 't', l: 'Título' }, { k: 'd', l: 'Descripción' }], T, 'Forma de pago')}</div>`;
+}
+function vTextos() {
+  let h = `<h2>Textos</h2><p class="sub">Todos los títulos y frases fijas del catálogo. Si dejás un campo vacío, ese texto no se muestra.</p>`, g = '';
+  CAT.TEXTOS.forEach(a => {
+    if (a[0] !== g) { if (g) h += '</div>'; g = a[0]; h += `<div class="box"><h3>${esc(g)}</h3>`; }
+    const v = S.txt[a[1]] != null ? S.txt[a[1]] : a[3];
+    h += `<label class="f"><span>${esc(a[2])}</span><input type="text" data-t="${a[1]}" value="${esc(v)}"></label>`;
+  });
+  return h + '</div>';
+}
+function vSitio() {
+  return `<h2>Datos del sitio</h2><p class="sub">Contacto y datos generales.</p><div class="box">
+  ${inp('cfg.marca', 'Nombre de la marca (barra superior)')}${inp('cfg.wa', 'WhatsApp (link completo)', 'https://wa.me/549263XXXXXXX')}${inp('cfg.tel', 'Teléfono(s)')}${inp('cfg.ig', 'Instagram')}${inp('cfg.mail', 'Correo')}${inp('cfg.zona', 'Zona de trabajo')}${inp('cfg.plazo', 'Plazo de obra')}</div>
+  <div class="box"><h3>Versión anterior</h3><p class="sub">Cada vez que guardás, la versión previa queda como respaldo. Podés cargarla acá y, si te gusta, guardarla.</p><button type="button" class="b s" data-act="restore">Cargar la versión anterior</button></div>`;
+}
+
+/* ---------- biblioteca de imágenes ---------- */
+let LIB = null, libMsg = '';
+const IMGEXT = /\.(jpe?g|png|webp|gif|avif|svg)$/i;
+async function loadLib(force) {
+  if (LIB && !force) return;
+  const seen = new Set(), L = []; libMsg = '';
+  const add = (it) => { if (!seen.has(it.value)) { seen.add(it.value); L.push(it); } };
+  if (imagenes.USAR_STORAGE && storage) {
+    try { const r = await ST.listAll(ST.ref(storage, 'imagenes')); const us = await Promise.all(r.items.map(async i => ({ value: await ST.getDownloadURL(i), prev: null, name: i.name, src: 'storage', path: i.fullPath }))); us.forEach(u => { u.prev = u.value; add(u); }); }
+    catch (e) { libMsg += 'No se pudo leer Firebase Storage (' + (e.code || e.message) + '). '; }
+  }
+  if (imagenes.GITHUB_REPO) {
+    try {
+      const r = await fetch(`https://api.github.com/repos/${imagenes.GITHUB_REPO}/contents/${imagenes.CARPETA}?ref=${imagenes.GITHUB_RAMA}`);
+      if (!r.ok) throw new Error('GitHub respondió ' + r.status);
+      (await r.json()).filter(f => f.type === 'file' && IMGEXT.test(f.name)).forEach(f => add({ value: imagenes.CARPETA + '/' + f.name, prev: f.download_url, name: f.name, src: 'carpeta' }));
+    } catch (e) { libMsg += 'No se pudo leer la carpeta de GitHub (' + e.message + '). '; }
+  }
+  CAT.IMG_BASE.forEach(v => add({ value: v, prev: imgSrc(v), name: v.split('/').pop(), src: 'carpeta' }));
+  LIB = L;
+}
+const libGrid = (del) => LIB.map((it, i) => `<div style="position:relative"><button type="button" class="li" data-act="use" data-i="${i}" title="${esc(it.name)}"><img loading="lazy" src="${esc(it.prev)}" alt=""><span>${esc(it.name)}</span></button>${del && it.src === 'storage' ? `<button type="button" class="x" data-act="libdel" data-i="${i}" title="Borrar">×</button>` : ''}</div>`).join('');
+const upHint = () => imagenes.USAR_STORAGE
+  ? `<button type="button" class="b p" data-act="upload">Subir fotos desde la compu</button>`
+  : `<div class="note"><b>Para sumar fotos nuevas:</b> subilas a la carpeta <code>${esc(imagenes.CARPETA)}/</code> de tu repositorio de GitHub (Add file → Upload files). Cuando se publique el sitio (1–2 minutos) tocá <b>Actualizar lista</b> y aparecen acá.</div>`;
+
+async function openPicker(cb, multi) {
+  pick = { cb, multi }; $('picker').hidden = false; $('pk').innerHTML = '<p>Cargando imágenes…</p>'; await loadLib(); renderPicker();
+}
+function renderPicker() {
+  $('pk').innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h3>Elegí una imagen</h3><button type="button" class="b s" data-act="pkclose">Cerrar</button></div>
+  ${libMsg ? `<div class="note w">${esc(libMsg)}</div>` : ''}${upHint()}<div class="acts" style="margin-top:8px"><button type="button" class="b s" data-act="relib">Actualizar lista</button></div>
+  <div class="lib">${libGrid(false)}</div>
+  <label class="f"><span>O pegá una ruta o un link de imagen</span><div class="acts"><input type="text" id="pkurl" placeholder="imagenes/mi-foto.jpg  ó  https://..." style="flex:1"><button type="button" class="b" data-act="useurl">Usar</button></div></label>${pick.multi ? '<p class="sub">Podés tocar varias fotos; cuando termines, cerrá esta ventana.</p>' : ''}`;
+}
+let pick = null;
+function vImagenes() {
+  return `<h2>Imágenes</h2><p class="sub">Todas las fotos disponibles para usar en el catálogo.</p>` + (libMsg ? `<div class="note w">${esc(libMsg)}</div>` : '') + upHint() + `<div class="acts" style="margin:8px 0"><button type="button" class="b s" data-act="relib">Actualizar lista</button></div><div class="lib" id="lib">${LIB ? libGrid(true) : 'Cargando…'}</div>`;
+}
+
+/* subir a Storage */
+function reducir(f) { return new Promise((res, rej) => { const u = URL.createObjectURL(f), i = new Image(); i.onload = () => { const s = Math.min(1, 1600 / Math.max(i.width, i.height)), c = document.createElement('canvas'); c.width = Math.round(i.width * s); c.height = Math.round(i.height * s); const x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(i, 0, 0, c.width, c.height); URL.revokeObjectURL(u); c.toBlob(b => b ? res(b) : rej(new Error('No se pudo procesar')), 'image/jpeg', .84); }; i.onerror = () => rej(new Error('No se pudo leer ' + f.name)); i.src = u; }); }
+$('file').onchange = async e => {
+  const fs = [...e.target.files]; e.target.value = ''; if (!fs.length || !storage) return; await loadLib();
+  for (const f of fs) {
+    if (!f.type.startsWith('image/')) continue;
+    try {
+      toast('Subiendo ' + f.name + '…', 0); const blob = await reducir(f);
+      const base = f.name.replace(/\.[^.]+$/, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase().slice(0, 40) || 'foto';
+      const name = Date.now().toString(36) + '-' + base + '.jpg', r = ST.ref(storage, 'imagenes/' + name);
+      await ST.uploadBytes(r, blob, { contentType: 'image/jpeg', cacheControl: 'public,max-age=31536000' });
+      const url = await ST.getDownloadURL(r); LIB.unshift({ value: url, prev: url, name, src: 'storage', path: 'imagenes/' + name });
+    } catch (er) { toast('Error al subir ' + f.name + ': ' + (er.code || er.message), 7000); return; }
+  }
+  toast('Fotos subidas ✓'); if (!$('picker').hidden) renderPicker(); else render();
+};
+
+/* ---------- render ---------- */
+function render() {
+  const y = window.scrollY;
+  $('tabs').innerHTML = TABS.map(t => `<button type="button" data-act="tab" data-t="${t[0]}" class="${tab === t[0] ? 'on' : ''}">${t[1]}</button>`).join('');
+  const v = { secciones: vSecciones, casas: () => vProyectos('casas'), quinchos: () => vProyectos('quinchos'), contenido: vContenido, textos: vTextos, sitio: vSitio, imagenes: vImagenes }[tab];
+  $('main').innerHTML = (!remote ? '<div class="note"><b>Todavía no publicaste cambios.</b> El catálogo muestra los datos originales. Cuando toques “Guardar cambios” se publica lo que ves acá.</div>' : '') + v();
+  window.scrollTo(0, y);
+  if (tab === 'imagenes' && !LIB) loadLib().then(() => { if (tab === 'imagenes') render(); });
+}
+
+/* ---------- eventos ---------- */
+const root = document.body;
+root.addEventListener('input', e => {
+  const el = e.target;
+  if (el.dataset.p) { set(S, el.dataset.p, el.dataset.lines ? lines(el.value) : el.value); mark(); }
+  else if (el.dataset.t) { const d = CAT.TEXTOS.filter(a => a[1] === el.dataset.t)[0]; S.txt[el.dataset.t] = el.value; if (d && d[3] === el.value) delete S.txt[el.dataset.t]; mark(); }
+});
+root.addEventListener('change', e => {
+  const el = e.target;
+  if (el.dataset.hide) { if (el.checked) delete S.hide[el.dataset.hide]; else S.hide[el.dataset.hide] = true; mark(); }
+  else if (el.dataset.rr) { set(S, el.dataset.p, el.value); mark(); render(); }
+});
+const swap = (a, i, j) => { if (j < 0 || j >= a.length) return; const t = a[i]; a[i] = a[j]; a[j] = t; };
+root.addEventListener('click', async e => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const d = b.dataset, act = d.act, p = d.p, i = +d.i, arr = p ? get(S, p) : null;
+  switch (act) {
+    case 'tab': tab = d.t; editX = null; editP = null; window.scrollTo(0, 0); render(); return;
+    case 'up': swap(arr, i, i - 1); break;
+    case 'dn': swap(arr, i, i + 1); break;
+    case 'del': arr.splice(i, 1); break;
+    case 'add': arr.push(JSON.parse(d.tpl)); break;
+    case 'star': { const x = arr.splice(i, 1); arr.unshift(x[0]); break; }
+    case 'rmimg': arr.splice(i, 1); break;
+    case 'clear': set(S, p, ''); break;
+    case 'pick': openPicker(url => { set(S, p, url); mark(); $('picker').hidden = true; render(); }, false); return;
+    case 'pickmulti': openPicker(url => { arr.push(url); mark(); toast('Foto agregada ✓', 1200); render(); }, true); return;
+    case 'addx': { const id = uid('x'); S.extra.push({ id, tipo: d.tipo, nav: 'Nueva', k: '', h: 'Nueva sección', e: '', l: '', n: '', body: '', lst: [], items: [], img: '', bt: '', bu: '' }); S.order.push(id); editX = id; break; }
+    case 'editx': editX = d.id; render(); setTimeout(() => $('xed') && $('xed').scrollIntoView({ behavior: 'smooth' }), 30); return;
+    case 'closex': editX = null; break;
+    case 'delx': if (!confirm('¿Eliminar esta sección?')) return; S.extra = S.extra.filter(x => x.id !== d.id); S.order = S.order.filter(x => x !== d.id); delete S.hide[d.id]; if (editX === d.id) editX = null; break;
+    case 'addp': { const k = d.k, id = uid('p'); S[k].push(k === 'casas' ? { id, n: 'Nueva casa', tag: '', sp: [{ v: '0', l: 'm² cubiertos' }, { v: '1', l: 'Dormitorios' }, { v: '1', l: 'Baños' }], semi: S.cmp.semi.slice(), full: S.cmp.full.slice(), desde: 'A confirmar', im: [] } : { id, n: 'Nuevo quincho', tag: '', sp: [{ v: '0', l: 'm²' }], inc: [], desde: 'A confirmar', im: [] }); editP = { k, id }; break; }
+    case 'editp': editP = { k: d.k, id: d.id }; window.scrollTo(0, 0); break;
+    case 'backp': editP = null; break;
+    case 'dupp': { const c = JSON.parse(JSON.stringify(S[d.k][i])); c.id = uid('p'); c.n += ' (copia)'; S[d.k].splice(i + 1, 0, c); editP = { k: d.k, id: c.id }; break; }
+    case 'delp': if (!confirm('¿Eliminar este proyecto?')) return; S[d.k].splice(i, 1); editP = null; break;
+    case 'restore': { try { const s = await F.getDoc(F.doc(db, 'catalogo', 'respaldo')); if (!s.exists()) { toast('Todavía no hay una versión anterior.'); return; } if (!confirm('Se cargará la versión anterior en el panel (todavía no se publica). ¿Seguir?')) return; S = CAT.normalize(s.data()); editX = editP = null; toast('Versión anterior cargada. Tocá “Guardar cambios” para publicarla.', 6000); } catch (er) { toast('No se pudo leer el respaldo: ' + (er.code || er.message), 6000); return; } break; }
+    case 'use': { const it = LIB[i]; if (!pick) { try { await navigator.clipboard.writeText(it.value); toast('Ruta copiada: ' + it.value); } catch (er) { toast(it.value, 6000); } return; } pick.cb(it.value); if (!pick.multi) pick = null; return; }
+    case 'useurl': { const v = $('pkurl').value.trim(); if (v) { pick.cb(v); if (!pick.multi) pick = null; } return; }
+    case 'pkclose': $('picker').hidden = true; pick = null; return;
+    case 'relib': LIB = null; libMsg = ''; if (!$('picker').hidden) { $('pk').innerHTML = '<p>Cargando…</p>'; await loadLib(true); renderPicker(); } else { render(); } return;
+    case 'upload': $('file').click(); return;
+    case 'libdel': { const it = LIB[i]; if (!confirm('¿Borrar "' + it.name + '"? Si la usás en el catálogo se va a ver rota.')) return; try { await ST.deleteObject(ST.ref(storage, it.path)); LIB.splice(i, 1); toast('Imagen borrada'); render(); } catch (er) { toast('No se pudo borrar: ' + (er.code || er.message), 6000); } return; }
+    default: return;
+  }
+  mark(); render();
+  if (act === 'addx') setTimeout(() => $('xed') && $('xed').scrollIntoView({ behavior: 'smooth' }), 30);
+});
+$('picker').addEventListener('click', e => { if (e.target === $('picker')) { $('picker').hidden = true; pick = null; } });
+</script>
+</body></html>

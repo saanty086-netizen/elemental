@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Catálogo: lo puede leer cualquiera (es la web pública), pero solo vos podés modificarlo.
+    // IMPORTANTE: reemplazá TU_CORREO@gmail.com por el correo del usuario que creaste en Authentication.
+    // Si querés permitir a más personas, agregá más correos separados por coma dentro de los corchetes.
+    match /catalogo/{doc} {
+      allow read: if true;
+      allow write: if request.auth != null
+                   && request.auth.token.email in ['TU_CORREO@gmail.com'];
+    }
+  }
+}
